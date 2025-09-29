@@ -44,7 +44,7 @@ async def get_telemetry_metrics(request: RequestModel):
 
         avg_latency = region_df['latency_ms'].mean()
         p95_latency = region_df['latency_ms'].quantile(0.95)
-        avg_uptime = region_df['uptime_percent'].mean()
+        avg_uptime = region_df['uptime_pct'].mean()
         breaches = int((region_df['latency_ms'] > request.threshold_ms).sum())
         
         response_data[region] = {
