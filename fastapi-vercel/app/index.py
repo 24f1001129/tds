@@ -19,7 +19,7 @@ app.add_middleware(
 
 # Construct a path to the data file relative to this script
 # This is a robust way to make sure Vercel finds the file
-data_path = os.path.join(os.path.dirname(__file__), 'telemetry.json')
+data_path = os.path.join(os.path.dirname(__file__), 'q-vercel-latency.json')
 df = pd.read_json(data_path)
 
 
