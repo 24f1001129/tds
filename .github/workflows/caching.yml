@@ -1,46 +1,31 @@
-# A name for the workflow
 name: CI with Dependency Caching
 
-# Controls when the action will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  
-  # Runs on pushes to the w2 branch
   push:
     branches: [ w2 ]
 
 jobs:
   build-with-cache:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Check out the repository code
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Python so we can use pip
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      # Step 3: The required caching action step
       - name: Cache pip dependencies using key cache-232ba4b
-        id: cache-pip # Give the step an ID to access its outputs
+        id: cache-pip
         uses: actions/cache@v4
         with:
-          # The directory to cache for pip
           path: ~/.cache/pip
-          # The exact, static key required by the assignment
           key: cache-232ba4b
 
-      # Step 4: The required prime-cache step that echoes the result
       - name: prime-cache-232ba4b
-        run: echo "The cache-hit status was: ${{ steps.cache-pip.outputs.cache-hit }}"
+        run: echo "The cache-hit status was:${{ steps.cache-pip.outputs.cache-hit }}"
 
-      # Step 5: Install dependencies, which will populate or use the cache
       - name: Install Python dependencies
-        # This assumes your requirements.txt is inside the fastapi-vercel folder
         run: pip install -r fastapi-vercel/requirements.txt
