@@ -1,0 +1,31 @@
+name: CI with Dependency Caching
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ w2 ]
+
+jobs:
+  build-with-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache pip dependencies using key cache-232ba4b
+        id: cache-pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: cache-232ba4b
+
+      - name: prime-cache-232ba4b
+        run: echo "The cache-hit status was:${{ steps.cache-pip.outputs.cache-hit }}"
+
+      - name: Install Python dependencies
+        run: pip install -r fastapi-vercel/requirements.txt
