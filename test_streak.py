@@ -1,5 +1,5 @@
 import pytest
-from .streak import longest_positive_streak
+from streak import longest_positive_streak
 
 def test_empty_list():
     assert longest_positive_streak([]) == 0
